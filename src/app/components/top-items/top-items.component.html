@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col">
+    @for(item of items(); track item.path){
+    <a class="btn btn-outline-success btn-sm me-1" routerLink="{{ item.path }}">
+      {{ item.text }}
+    </a>
+    }
+  </div>
+</div>

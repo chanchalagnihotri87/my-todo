@@ -1,0 +1,60 @@
+<app-breadcrum [paths]="paths" />
+
+<div class="row">
+  <div class="col-8">
+    <h4>{{ sprint()?.text }}</h4>
+  </div>
+  <div class="col-4 text-end">
+    {{ sprint()?.startDate | date : "MM/dd/yyy" }} -
+    {{ sprint()?.endDate | date : "MM/dd/yyy" }}
+  </div>
+</div>
+
+<app-top-items [items]="todaysItems" />
+
+<div class="row mt-3">
+  <div class="col-md-12">
+    <p class="mb-0">Tasks</p>
+  </div>
+</div>
+
+<hr class="mt-2" />
+
+<ul class="list-group">
+  @for(todoItem of todoItems(); track todoItem.id) {
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-1">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          value=""
+          id="firstCheckbox"
+          [checked]="todoItem.completed"
+          (change)="toggleCompleted(todoItem)"
+        />
+      </div>
+      <div class="col-8">
+        {{ todoItem.text }}
+      </div>
+
+      <div class="col-3">
+        <select class="form-select" (change)="updateDate(todoItem.id, $event)">
+          <option value="">Date</option>
+          @for(dateItem of dateRange(); track dateItem){
+          <option
+            [value]="convertToString(dateItem)"
+            [selected]="
+              convertToString(dateItem) ==
+              convertToString(convertToDate(todoItem.date))
+            "
+          >
+            {{ convertToLongDateString(dateItem) }}
+          </option>
+          }
+        </select>
+      </div>
+    </div>
+  </li>
+  }
+</ul>

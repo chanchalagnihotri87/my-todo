@@ -1,0 +1,40 @@
+<app-breadcrum [paths]="paths" />
+
+<app-page-heder [title]="task()?.text" />
+
+<app-top-items [items]="top20PercentTasks" />
+
+@if(showTodoModal){
+<!-- New Problem  Modal -->
+
+<app-add-edit-modal
+  [modalTitle]="selectedTodoItemId ? 'Edit Item' : 'Add an Item'"
+  (onSubmit)="handleSubmitForm($event)"
+  (onClose)="hideModal()"
+  [enteredTitle]="enteredTitle"
+/>
+}
+
+<div class="row mt-4 mb-2">
+  <div class="col-md-9">
+    <p class="mb-0">Todo Items</p>
+  </div>
+  <div class="col text-end">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-sm"
+      (click)="startAddingTodoItem()"
+    >
+      Add an item
+    </button>
+  </div>
+</div>
+
+<hr class="mt-2" />
+
+<app-todo-items-list
+  [todoItems]="todoItems()"
+  [taskId]="id()"
+  (onEdit)="handleEdit($event)"
+  (onReloadItems)="loadTodoItems()"
+/>

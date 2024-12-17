@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row mt-4 g-4 life-area-box-container">
+    @for(lifeArea of lifeAreas(); track lifeArea.id){
+    <div class="col-4">
+      <a [routerLink]="['/lifearea', lifeArea.id]" href="life-area-detail.html">
+        <div class="border life-area-box">
+          <h5>{{ lifeArea.name }}</h5>
+        </div>
+      </a>
+    </div>
+    }
+  </div>
+</div>

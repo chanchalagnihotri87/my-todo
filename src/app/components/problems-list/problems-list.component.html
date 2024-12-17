@@ -1,0 +1,62 @@
+<ul cdkDropList (cdkDropListDropped)="dropProblem($event)" class="list-group">
+  @for(problem of problems(); track problem.id){
+  <li cdkDrag class="list-group-item">
+    <div class="row">
+      <div class="col-1">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          value=""
+          id="firstCheckbox"
+          [checked]="problem.completed"
+          (change)="toggleCompleted(problem)"
+        />
+      </div>
+      <div class="col-8">
+        <a [routerLink]="['/problem', problem.id]"> {{ problem.text }}</a>
+      </div>
+
+      <div class="col-1">
+        @if(problem.twentyPercent) {
+        <span class="badge text-bg-dark rounded-pill">Top 20%</span>
+        }
+      </div>
+
+      <div class="col-2 text-end">
+        @if(problem.twentyPercent){
+        <button
+          class="btn btn-sm btn-outline-secondary me-1"
+          type="button"
+          (click)="markAsNormal(problem.id)"
+        >
+          80%
+        </button>
+        } @else{
+        <button
+          class="btn btn-sm btn-outline-secondary me-1"
+          type="button"
+          (click)="markAsTwentyPercent(problem.id)"
+        >
+          20%
+        </button>
+        }
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary me-1"
+          (click)="handleEdit(problem)"
+        >
+          <i class="fas fa-solid fa-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="handleDelete(problem.id)"
+        >
+          <i class="fas fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+  }
+</ul>

@@ -1,0 +1,62 @@
+<ul cdkDropList (cdkDropListDropped)="dropProblem($event)" class="list-group">
+  @for(goal of goals(); track goal.id){
+  <li cdkDrag class="list-group-item">
+    <div class="row">
+      <div class="col-1">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          value=""
+          id="firstCheckbox"
+          [checked]="goal.completed"
+          (change)="toggleCompleted(goal)"
+        />
+      </div>
+      <div class="col-8">
+        <a [routerLink]="['/goal', goal.id]"> {{ goal.text }}</a>
+      </div>
+
+      <div class="col-1">
+        @if(goal.twentyPercent) {
+        <span class="badge text-bg-dark rounded-pill">Top 20%</span>
+        }
+      </div>
+
+      <div class="col-2 text-end">
+        @if(goal.twentyPercent){
+        <button
+          class="btn btn-sm btn-outline-secondary me-1"
+          type="button"
+          (click)="markAsNormal(goal.id)"
+        >
+          80%
+        </button>
+        } @else{
+        <button
+          class="btn btn-sm btn-outline-secondary me-1"
+          type="button"
+          (click)="markAsTwentyPercent(goal.id)"
+        >
+          20%
+        </button>
+        }
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary me-1"
+          (click)="handleEdit(goal)"
+        >
+          <i class="fas fa-solid fa-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="handleDelete(goal.id)"
+        >
+          <i class="fas fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+  }
+</ul>

@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("../node_modules/bootstrap/scss/bootstrap.scss");
+@import url("../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
+
+.bg-grey-custom {
+  background-color: #f2f2f2;
+}
+
+.navbar-nav a {
+  margin-right: 20px;
+  display: block;
+}
+
+.navbar-nav img {
+  width: 40px;
+  height: auto;
+}
+
+.life-area-box {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.life-area-box-container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumb-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-tabs .nav-item button {
+  color: inherit;
+}
+
+.tab-pane .list-group .list-group-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.checkboxlist-content a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-header {
+  justify-content: space-between;
+  .close {
+    background: inherit;
+    border: none;
+    font-size: 30px;
+    padding: 0 0;
+    line-height: 14px;
+  }
+}
+
+.cdk-drag-preview {
+  overflow: visible;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+.list-group-item {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

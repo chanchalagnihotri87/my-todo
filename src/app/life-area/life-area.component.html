@@ -1,0 +1,135 @@
+<app-breadcrum [paths]="paths" />
+<app-page-heder [title]="lifeArea()?.name" />
+
+<app-top-items [items]="top20PercentProblems" />
+
+@if(showProblemModal){
+<!-- New Problem  Modal -->
+<app-add-edit-modal
+  [modalTitle]="selectedProblemId ? 'Edit Problem' : 'Add a Problem'"
+  (onSubmit)="handleSubmitForm($event)"
+  (onClose)="hideModal()"
+  [enteredTitle]="enteredTitle"
+/>
+}
+
+<div class="row mt-4">
+  <div class="col">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          id="vision-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#vision"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Vision
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          id="vision-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#plan"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Plan
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link active"
+          id="vision-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#problems"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Problems
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content border p-3">
+      <!-- Vision Tab -->
+      <div
+        class="tab-pane"
+        id="vision"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+        tabindex="0"
+      >
+        <textarea
+          name=""
+          id=""
+          rows="5"
+          cols="30"
+          class="form-control"
+          (blur)="updateVision()"
+          [(ngModel)]="vision"
+        ></textarea>
+      </div>
+
+      <!-- Plan Tab -->
+      <div
+        class="tab-pane"
+        id="plan"
+        role="tabpanel"
+        aria-labelledby="plan-tab"
+        tabindex="0"
+      >
+        <textarea
+          name=""
+          id=""
+          rows="5"
+          cols="30"
+          class="form-control"
+          (blur)="updatePlan()"
+          [(ngModel)]="plan"
+        ></textarea>
+      </div>
+
+      <!-- Problems Tab -->
+      <div
+        class="tab-pane active"
+        id="problems"
+        role="tabpanel"
+        aria-labelledby="messages-tab"
+        tabindex="0"
+      >
+        <div class="row mb-2">
+          <div class="col text-end">
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-sm"
+              (click)="startAddingProblem()"
+            >
+              Add a problem
+            </button>
+          </div>
+        </div>
+        <app-problems-list
+          [problems]="problems()"
+          (onedit)="handleEdit($event)"
+          (ondelete)="handleDelete($event)"
+          (ontogglecompleted)="toggleProblemCompleted($event)"
+          (onmarkastwentypercent)="markAsTwentyPercent($event)"
+          (onmarkasnormal)="markAsNormal($event)"
+          (onloadproblems)="loadProblems()"
+          [lifeAreaId]="id()"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+<app-breadcrum [paths]="paths" />
+
+<app-page-heder title="Sprints" />
+
+@if(showSprintModal){
+<div
+  class="modal show"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ selectedSprintId ? "Edit Sprint" : "Add a Sprint" }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form
+        [formGroup]="sprintForm"
+        #form="ngForm"
+        (ngSubmit)="onsubmitSprintForm()"
+      >
+        <div class="modal-body">
+          <div class="form-group mb-2">
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              formControlName="title"
+            />
+
+            @if(sprintForm.controls.title.invalid &&
+            ((sprintForm.controls.title.touched &&
+            sprintForm.controls.title.dirty) || form.submitted) ){
+            <span class="text-danger">Required!</span>
+            }
+          </div>
+          <div class="form-group mb-2">
+            <label htmlFor="startDate">Start Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="startDate"
+              name="startDate"
+              formControlName="startDate"
+            />
+
+            @if(sprintForm.controls.startDate.invalid &&
+            ((sprintForm.controls.startDate.touched &&
+            sprintForm.controls.startDate.dirty) || form.submitted) ){
+            <span class="text-danger">Required!</span>
+            }
+          </div>
+          <div class="form-group">
+            <label htmlFor="endDate">End Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="endDate"
+              name="endDate"
+              formControlName="endDate"
+            />
+
+            @if(sprintForm.controls.endDate.invalid &&
+            ((sprintForm.controls.endDate.touched &&
+            sprintForm.controls.endDate.dirty) || form.submitted) ){
+            <span class="text-danger">Required!</span>
+            }
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            (click)="hideModal()"
+          >
+            Close
+          </button>
+          <button class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+<div class="row mb-2">
+  <div class="col text-end">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-sm"
+      (click)="startAddingSprint()"
+    >
+      Add a sprint
+    </button>
+  </div>
+</div>
+
+<ul class="list-group">
+  @for(sprint of sprints(); track sprint.id) {
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-1">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          value=""
+          id="firstCheckbox"
+          [checked]="sprint.completed"
+          (change)="toggleCompleted(sprint)"
+        />
+      </div>
+      <div class="col-6">
+        <a [routerLink]="['/sprint', sprint.id]"> {{ sprint.text }}</a>
+      </div>
+
+      <div class="col-3">
+        {{ sprint.startDate | date : "MM/dd/yyyy" }} -
+        {{ sprint.endDate | date : "MM/dd/yyyy" }}
+      </div>
+
+      <div class="col-2 text-end">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary me-1"
+          (click)="handleEdit(sprint)"
+        >
+          <i class="fas fa-solid fa-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="handleDelete(sprint.id)"
+        >
+          <i class="fas fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+  }
+</ul>

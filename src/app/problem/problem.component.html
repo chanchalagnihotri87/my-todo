@@ -1,0 +1,100 @@
+<app-breadcrum [paths]="paths" />
+
+<app-page-heder [title]="problem()?.text" />
+
+<app-top-items [items]="top20PercentGoals" />
+
+@if(showGoalModal){
+<!-- New Problem  Modal -->
+
+<app-add-edit-modal
+  [modalTitle]="selectedGoalId ? 'Edit Goal' : 'Add a Goal'"
+  (onSubmit)="handleSubmitForm($event)"
+  (onClose)="hideModal()"
+  [enteredTitle]="enteredTitle"
+/>
+}
+
+<div class="row mt-4">
+  <div class="col">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          id="vision-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#plan"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Plan
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link active"
+          id="vision-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#goals"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Goals
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content border p-3">
+      <!-- Plan Tab -->
+      <div
+        class="tab-pane"
+        id="plan"
+        role="tabpanel"
+        aria-labelledby="plan-tab"
+        tabindex="0"
+      >
+        <textarea
+          name=""
+          id=""
+          rows="5"
+          cols="30"
+          class="form-control"
+          (blur)="updatePlan()"
+          [(ngModel)]="plan"
+        ></textarea>
+      </div>
+
+      <!-- Problems Tab -->
+      <div
+        class="tab-pane active"
+        id="goals"
+        role="tabpanel"
+        aria-labelledby="messages-tab"
+        tabindex="0"
+      >
+        <div class="row mb-2">
+          <div class="col text-end">
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-sm"
+              (click)="startAddingGoal()"
+            >
+              Add a goal
+            </button>
+          </div>
+        </div>
+        <app-goals-list
+          [goals]="goals()"
+          [problemId]="id()"
+          (onEdit)="handleEdit($event)"
+          (onReloadGoals)="loadGoals()"
+        />
+      </div>
+    </div>
+  </div>
+</div>

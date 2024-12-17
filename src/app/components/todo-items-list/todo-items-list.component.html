@@ -1,0 +1,55 @@
+<ul cdkDropList (cdkDropListDropped)="dropProblem($event)" class="list-group">
+  @for(todoItem of todoItems(); track todoItem.id) {
+  <li cdkDrag class="list-group-item">
+    <div class="row">
+      <div class="col-1">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          value=""
+          id="firstCheckbox"
+          [checked]="todoItem.completed"
+          (change)="toggleCompleted(todoItem)"
+        />
+      </div>
+      <div class="col-8">
+        {{ todoItem.text }}
+      </div>
+
+      <div class="col-2">
+        <select
+          class="form-select text-muted"
+          (change)="updateSprint(todoItem.id, $event)"
+        >
+          <option value="">Sprint</option>
+          @for(sprint of sprints(); track sprint.id){
+          <option
+            [value]="sprint.id"
+            [selected]="sprint.id === todoItem.sprintId"
+          >
+            {{ sprint.text }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-1 text-end">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary me-1"
+          (click)="handleEdit(todoItem)"
+        >
+          <i class="fas fa-solid fa-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="handleDelete(todoItem.id)"
+        >
+          <i class="fas fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+  }
+</ul>
